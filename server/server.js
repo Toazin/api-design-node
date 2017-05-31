@@ -11,6 +11,10 @@ app.use(morgan('dev'))
 app.use(express.static('client'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+app.use(function (req, res, next) {
+    console.log("Req: ", req.body);
+    next();
+})
 // this is called mounting. when ever a req comes in for
 // '/lion' we want to use this router
 app.use('/lions', lionRouter);
@@ -23,7 +27,7 @@ app.use(function(err, req, res, next) {
   }
 });
 
-
+//{"instructions": "Send method defined in rfc2616 section 9.5"}
 
 app.listen(3000);
 console.log('on port 3000');

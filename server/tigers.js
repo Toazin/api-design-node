@@ -14,53 +14,48 @@ var updateId = function(req, res, next) {
 };
 
 tigerRouter.param('id', function(req, res, next, id) {
-  var lion = _.find(tigers, {id: id})
+  var tiger = _.find(tigers, {id: id})
 
-  if (lion) {
-    req.lion = lion;
+  if (tiger) {
+    req.tiger = tiger;
     next();
   } else {
-    res.send();
+    res.status(404).send({message: "Tiger not found"});
   }
 });
 
-tigerRouter.route('/')
-  .get(function(req, res){
+//get
+tigerRouter.get('/', function (req, res) {
     res.json(tigers);
-  })
-  .post(updateId, function(req, res) {
+})
+//get/:id
+tigerRouter.get('/:id', function (req, res) {
+    console.log("entre id", req.body.id);
+    res.send(req.tiger);
+})
+//post
+tigerRouter.post('/',updateId, function (req, res) {
     var tiger = req.body;
 
     tigers.push(tiger);
 
     res.json(tiger);
-  });
+})
+//delete/:id
+tigerRouter.delete('/:id', function (req, res) {
+    var tigerIndex = _.findIndex(tigers,{id:req.params.id});
 
-tigerRouter.route('/:id')
-  .get(function(req, res){
-    var tiger = req.tiger;
-    res.json(tiger || {});
-  })
-  .delete(function(req, res) {
-    var tiger = _.findIndex(tigers, {id: req.params.id});
-    tigers.splice(tiger, 1);
+    tigers.splice(tigerIndex,1);
 
     res.json(req.tiger);
-  })
-  .put(function(req, res) {
-    var update = req.body;
-    if (update.id) {
-      delete update.id
-    }
+})
+//put
+tigerRouter.put('/:id', function (req, res) {
+    var tiger = req.body;
+    var updateTiger = _.assign(req.tiger,tiger);
+    res.json(updateTiger);
+})
 
-    var tiger = _.findIndex(tigers, {id: req.params.id});
-    if (!tigers[tiger]) {
-      res.send();
-    } else {
-      var updatedTiger = _.assign(tigers[tiger], update);
-      res.json(updatedTiger);
-    }
-  });
 
 
 module.exports = tigerRouter;
