@@ -12,6 +12,14 @@
     "body-parser": "^1.13.2",
     "express": "^4.13.1",
     "lodash": "^3.10.0",
+<<<<<<< HEAD
     "morgan": "^1.8.2"
+=======
+    "morgan": "^1.6.1"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "supertest": "^1.0.1"
+>>>>>>> 0a70576c22b16847a39bbedeb0801fcff3a652b3
   }
 }

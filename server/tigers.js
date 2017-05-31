@@ -23,7 +23,6 @@ tigerRouter.param('id', function(req, res, next, id) {
     res.status(404).send({message: "Tiger not found"});
   }
 });
-
 //get
 tigerRouter.get('/', function (req, res) {
     res.json(tigers);
