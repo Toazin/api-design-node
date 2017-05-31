@@ -22,14 +22,12 @@ app.use('/tigers', tigerRouter);
 
 app.use(function(err, req, res, next) {
   if (err) {
-<<<<<<< HEAD
     console.log(err.message);
-=======
->>>>>>> 0a70576c22b16847a39bbedeb0801fcff3a652b3
     res.status(500).send(err);
   }
 });
 
-//{"instructions": "Send method defined in rfc2616 section 9.5"}
+
+//app.listen(3000);
 
 module.exports = app;
