@@ -1,6 +1,12 @@
 module.exports = function () {
     return function (err,req,res,next) {
         console.log("Error detected: ", err.type, err.message);
+
+        if (err.name === 'UnauthorizedError') {
+            res.status(401).send('Invalid token');
+            return;
+        }
+
         var errType = err.type;
         switch (errType) {
             case 404:

@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-mongoose.connect('mongodb://localhost/blogger-app');
+var config = require('../../config/config.js');
+mongoose.connect(config.db.url);
 
 var PostSchema = new Schema({
     title: {

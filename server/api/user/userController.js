@@ -1,5 +1,6 @@
 var User = require('./UserModel.js');
 var _ = require('lodash');
+var signToken = require('../../auth/auth.js').signToken;
 
 exports.param = function (req, res, next, id) {
     User.findById(id).then(function (user) {
@@ -46,12 +47,19 @@ exports.put = function(req, res, next) {
 
 //post
 exports.post = function (req, res, next) {
-    var newUser = req.body;
-    User.create(newUser).then(function (user) {
-        res.json(user);
-    },function (err) {
-        next(err);
+    var newUser = new User(req.body);
+    newUser.hashedPassword = newUser.encryptPassword(newUser.password);
+    newUser.save(function (err,user) {
+        if(err){ next(err);}
+        var token = signToken(user._id);
+        console.log("Token: ", token);
+        res.json({token:token});
     })
+    // User.create(newUser).then(function (user) {
+    //     res.json(user);
+    // },function (err) {
+    //     next(err);
+    // })
 }
 //delete
 exports.delete = function(req, res, next) {
